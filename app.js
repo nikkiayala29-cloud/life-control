@@ -1,7 +1,19 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let progress = 0;
-let habits = ["Drink water 💧", "Stretch 🧘", "Read 10 mins 📖", "Walk 🚶"];
+
+let habits = [
+  "Drink water 💧",
+  "Stretch 🧘",
+  "Read 10 mins 📖",
+  "Walk 🚶"
+];
+
 let habitIndex = 0;
+
+/* INIT */
+renderTasks();
+updateStats();
+loadTheme();
 
 /* NAVIGATION */
 function switchTab(tab) {
@@ -13,6 +25,10 @@ function switchTab(tab) {
 }
 
 /* TASK SYSTEM */
+document.getElementById("taskInput").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") addTask();
+});
+
 function addTask() {
   let input = document.getElementById("taskInput");
 
@@ -20,31 +36,31 @@ function addTask() {
     tasks.push(input.value);
     localStorage.setItem("tasks", JSON.stringify(tasks));
     input.value = "";
+
     renderTasks();
-    showToast("Task added");
     updateStats();
+    showToast("Task added ✔");
   }
 }
 
 function renderTasks() {
-  let container = document.getElementById("taskList");
-  container.innerHTML = "";
+  let list = document.getElementById("taskList");
+  list.innerHTML = "";
 
   tasks.forEach((t, i) => {
-    container.innerHTML += `
+    list.innerHTML += `
       <div class="task">
         ${t}
-        <button onclick="removeTask(${i})">x</button>
+        <button onclick="deleteTask(${i})">✕</button>
       </div>
     `;
   });
 }
 
-function removeTask(i) {
+function deleteTask(i) {
   tasks.splice(i, 1);
   localStorage.setItem("tasks", JSON.stringify(tasks));
   renderTasks();
-  showToast("Task removed");
   updateStats();
 }
 
@@ -58,17 +74,16 @@ function nextHabit() {
 function increase() {
   if (progress < 100) progress += 10;
 
-  document.querySelector("#progressBar").style.width = progress + "%";
-  document.querySelector("#progressBar2").style.width = progress + "%";
+  document.getElementById("progressBar").style.width = progress + "%";
+  document.getElementById("progressBar2").style.width = progress + "%";
 }
 
 /* STATS */
 function updateStats() {
-  document.getElementById("taskCount").innerText =
-    "Tasks: " + tasks.length;
+  document.getElementById("taskCount").innerText = tasks.length;
 }
 
-/* TOAST NOTIFICATION */
+/* TOAST */
 function showToast(msg) {
   let toast = document.getElementById("toast");
   toast.innerText = msg;
@@ -79,10 +94,14 @@ function showToast(msg) {
   }, 1500);
 }
 
-function notify() {
-  showToast("System running smoothly ⚡");
+/* THEME */
+function toggleTheme() {
+  document.body.classList.toggle("light");
+  localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
 }
 
-/* INIT */
-renderTasks();
-updateStats();
+function loadTheme() {
+  if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light");
+  }
+}
