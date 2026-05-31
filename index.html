@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Control</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<header>
+  <h1>🧠 Life Control</h1>
+  <p>Dashboard of your daily life</p>
+</header>
+
+<section class="grid">
+
+  <div class="card">
+    <h2>📅 Today Tasks</h2>
+    <ul id="taskList"></ul>
+    <input id="taskInput" placeholder="Add task">
+    <button onclick="addTask()">Add</button>
+  </div>
+
+  <div class="card">
+    <h2>📊 Productivity Score</h2>
+    <div class="big" id="score">0%</div>
+    <button onclick="increaseScore()">+ Improve Day</button>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Goals</h2>
+    <ul>
+      <li>Study 2 hours</li>
+      <li>Finish project</li>
+      <li>Exercise</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🧘 Daily Habit</h2>
+    <p id="habit">Drink water 💧</p>
+    <button onclick="changeHabit()">Next Habit</button>
+  </div>
+
+</section>
+
+</body>
+
+<script src="app.js"></script>
+</html>
