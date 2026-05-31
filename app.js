@@ -1,38 +1,88 @@
-let habitIndex = 0;
-let habits = ["Drink water 💧", "Read 10 mins 📖", "Take a walk 🚶", "Stretch 🧘"];
-
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let progress = 0;
+let habits = ["Drink water 💧", "Stretch 🧘", "Read 10 mins 📖", "Walk 🚶"];
+let habitIndex = 0;
 
-// NAVIGATION (REAL APP FEEL)
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => {
-    p.classList.remove('active');
-  });
+/* NAVIGATION */
+function switchTab(tab) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(tab).classList.add("active");
 
-  document.getElementById(page).classList.add('active');
+  document.getElementById("pageTitle").innerText =
+    tab.charAt(0).toUpperCase() + tab.slice(1);
 }
 
-// TASKS
+/* TASK SYSTEM */
 function addTask() {
   let input = document.getElementById("taskInput");
-  if (input.value.trim() !== "") {
-    let li = document.createElement("li");
-    li.textContent = "✔ " + input.value;
-    document.getElementById("taskList").appendChild(li);
+
+  if (input.value.trim()) {
+    tasks.push(input.value);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
     input.value = "";
+    renderTasks();
+    showToast("Task added");
+    updateStats();
   }
 }
 
-// HABITS
+function renderTasks() {
+  let container = document.getElementById("taskList");
+  container.innerHTML = "";
+
+  tasks.forEach((t, i) => {
+    container.innerHTML += `
+      <div class="task">
+        ${t}
+        <button onclick="removeTask(${i})">x</button>
+      </div>
+    `;
+  });
+}
+
+function removeTask(i) {
+  tasks.splice(i, 1);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  renderTasks();
+  showToast("Task removed");
+  updateStats();
+}
+
+/* HABITS */
 function nextHabit() {
   habitIndex = (habitIndex + 1) % habits.length;
   document.getElementById("habitText").innerText = habits[habitIndex];
 }
 
-// STATS
+/* PROGRESS */
 function increase() {
-  if (progress < 100) {
-    progress += 20;
-    document.getElementById("progress").style.width = progress + "%";
-  }
+  if (progress < 100) progress += 10;
+
+  document.querySelector("#progressBar").style.width = progress + "%";
+  document.querySelector("#progressBar2").style.width = progress + "%";
 }
+
+/* STATS */
+function updateStats() {
+  document.getElementById("taskCount").innerText =
+    "Tasks: " + tasks.length;
+}
+
+/* TOAST NOTIFICATION */
+function showToast(msg) {
+  let toast = document.getElementById("toast");
+  toast.innerText = msg;
+  toast.style.display = "block";
+
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 1500);
+}
+
+function notify() {
+  showToast("System running smoothly ⚡");
+}
+
+/* INIT */
+renderTasks();
+updateStats();
