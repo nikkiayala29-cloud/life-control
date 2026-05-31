@@ -9,66 +9,88 @@
 
 <body>
 
-<div class="app">
+<div class="layout">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>🧠 Life Control</h2>
 
-    <button onclick="showPage('dashboard')">Dashboard</button>
-    <button onclick="showPage('tasks')">Tasks</button>
-    <button onclick="showPage('habits')">Habits</button>
-    <button onclick="showPage('stats')">Stats</button>
+    <button onclick="switchTab('dashboard')">Dashboard</button>
+    <button onclick="switchTab('tasks')">Tasks</button>
+    <button onclick="switchTab('habits')">Habits</button>
+    <button onclick="switchTab('stats')">Stats</button>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <h3 id="pageTitle">Dashboard</h3>
+      <button onclick="notify()">🔔 Notify</button>
+    </div>
 
     <!-- DASHBOARD -->
     <section id="dashboard" class="page active">
-      <h1>Dashboard</h1>
-      <div class="card">Welcome back 👋</div>
-      <div class="card">Today is your control center.</div>
+      <div class="grid">
+
+        <div class="card big">
+          <h3>Welcome back 👋</h3>
+          <p>Your life control center is active.</p>
+        </div>
+
+        <div class="card">
+          <h3>Today's Progress</h3>
+          <div class="bar"><div id="progressBar"></div></div>
+        </div>
+
+        <div class="card">
+          <h3>Quick Stats</h3>
+          <p id="taskCount">Tasks: 0</p>
+        </div>
+
+      </div>
     </section>
 
     <!-- TASKS -->
     <section id="tasks" class="page">
-      <h1>Tasks</h1>
+      <h2>Tasks</h2>
 
       <div class="card">
-        <input id="taskInput" placeholder="Add task">
+        <input id="taskInput" placeholder="Add new task">
         <button onclick="addTask()">Add Task</button>
       </div>
 
-      <ul id="taskList"></ul>
+      <div id="taskList"></div>
     </section>
 
     <!-- HABITS -->
     <section id="habits" class="page">
-      <h1>Habits</h1>
+      <h2>Habits</h2>
 
       <div class="card">
         <p id="habitText">Drink water 💧</p>
-        <button onclick="nextHabit()">Next Habit</button>
+        <button onclick="nextHabit()">Next</button>
       </div>
     </section>
 
     <!-- STATS -->
     <section id="stats" class="page">
-      <h1>Stats</h1>
+      <h2>Analytics</h2>
 
       <div class="card">
-        <p>Productivity</p>
-        <div class="bar">
-          <div id="progress"></div>
-        </div>
-        <button onclick="increase()">Improve Day</button>
+        <p>Productivity Score</p>
+        <div class="bar"><div id="progressBar2"></div></div>
+        <button onclick="increase()">Improve</button>
       </div>
     </section>
 
   </main>
 
 </div>
+
+<!-- NOTIFICATION -->
+<div id="toast" class="toast">Action completed</div>
 
 <script src="app.js"></script>
 </body>
