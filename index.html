@@ -9,44 +9,67 @@
 
 <body>
 
-<header>
-  <h1>🧠 Life Control</h1>
-  <p>Dashboard of your daily life</p>
-</header>
+<div class="app">
 
-<section class="grid">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>🧠 Life Control</h2>
 
-  <div class="card">
-    <h2>📅 Today Tasks</h2>
-    <ul id="taskList"></ul>
-    <input id="taskInput" placeholder="Add task">
-    <button onclick="addTask()">Add</button>
-  </div>
+    <button onclick="showPage('dashboard')">Dashboard</button>
+    <button onclick="showPage('tasks')">Tasks</button>
+    <button onclick="showPage('habits')">Habits</button>
+    <button onclick="showPage('stats')">Stats</button>
+  </aside>
 
-  <div class="card">
-    <h2>📊 Productivity Score</h2>
-    <div class="big" id="score">0%</div>
-    <button onclick="increaseScore()">+ Improve Day</button>
-  </div>
+  <!-- MAIN CONTENT -->
+  <main class="main">
 
-  <div class="card">
-    <h2>🎯 Goals</h2>
-    <ul>
-      <li>Study 2 hours</li>
-      <li>Finish project</li>
-      <li>Exercise</li>
-    </ul>
-  </div>
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page active">
+      <h1>Dashboard</h1>
+      <div class="card">Welcome back 👋</div>
+      <div class="card">Today is your control center.</div>
+    </section>
 
-  <div class="card">
-    <h2>🧘 Daily Habit</h2>
-    <p id="habit">Drink water 💧</p>
-    <button onclick="changeHabit()">Next Habit</button>
-  </div>
+    <!-- TASKS -->
+    <section id="tasks" class="page">
+      <h1>Tasks</h1>
 
-</section>
+      <div class="card">
+        <input id="taskInput" placeholder="Add task">
+        <button onclick="addTask()">Add Task</button>
+      </div>
 
-</body>
+      <ul id="taskList"></ul>
+    </section>
+
+    <!-- HABITS -->
+    <section id="habits" class="page">
+      <h1>Habits</h1>
+
+      <div class="card">
+        <p id="habitText">Drink water 💧</p>
+        <button onclick="nextHabit()">Next Habit</button>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="stats" class="page">
+      <h1>Stats</h1>
+
+      <div class="card">
+        <p>Productivity</p>
+        <div class="bar">
+          <div id="progress"></div>
+        </div>
+        <button onclick="increase()">Improve Day</button>
+      </div>
+    </section>
+
+  </main>
+
+</div>
 
 <script src="app.js"></script>
+</body>
 </html>
